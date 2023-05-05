@@ -1,0 +1,21 @@
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Circulo struct {
+	raio float64
+}
+
+func main() {
+
+	areaCirc := Circulo{}
+
+	fmt.Scan(&areaCirc.raio)
+
+	fmt.Print("Dê um raio para o círculo: ")
+	fmt.Printf("%.18f\n", math.Pi*areaCirc.raio*areaCirc.raio)
+
+}
