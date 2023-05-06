@@ -1,0 +1,34 @@
+package main
+
+import "fmt"
+
+type CEP struct {
+	rua    string
+	numero int
+	estado string
+}
+
+type Pessoa struct {
+	nome     string
+	idade    int
+	endereco CEP
+}
+
+func main() {
+
+	casa := CEP{
+		"São joaquim",
+		500,
+		"goias",
+	}
+
+	p := Pessoa{
+		"Paulo",
+		18,
+		casa,
+	}
+	fmt.Println(p.nome)
+	fmt.Println(p.idade)
+	fmt.Println(p.endereco)
+
+}
