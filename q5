@@ -1,0 +1,82 @@
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+type Music struct {
+	Title    string
+	Artist   string
+	Playlist []string
+}
+
+type Playlist struct {
+	Title   string
+	Musics  []Music
+}
+
+func searchPlaylistsByTitle(title string, playlists []Playlist) []Playlist {
+	var matchingPlaylists []Playlist
+
+	for _, playlist := range playlists {
+		var matchingMusics []Music
+
+		for _, music := range playlist.Musics {
+			if strings.Contains(strings.ToLower(music.Title), strings.ToLower(title)) {
+				matchingMusics = append(matchingMusics, music)
+			}
+		}
+
+		if len(matchingMusics) > 0 {
+			playlistWithMatchingMusics := playlist
+			playlistWithMatchingMusics.Musics = matchingMusics
+			matchingPlaylists = append(matchingPlaylists, playlistWithMatchingMusics)
+		}
+	}
+
+	return matchingPlaylists
+}
+
+func main() {
+	// Exemplo de playlists
+	playlist1 := Playlist{
+		Title: "Playlist 1",
+		Musics: []Music{
+			{Title: "Music 1", Artist: "Artist 1", Playlist: []string{"Playlist 1"}},
+			{Title: "Music 2", Artist: "Artist 2", Playlist: []string{"Playlist 1"}},
+		},
+	}
+
+	playlist2 := Playlist{
+		Title: "Playlist 2",
+		Musics: []Music{
+			{Title: "Music 3", Artist: "Artist 3", Playlist: []string{"Playlist 2"}},
+			{Title: "Music 4", Artist: "Artist 4", Playlist: []string{"Playlist 2"}},
+		},
+	}
+
+	playlist3 := Playlist{
+		Title: "Playlist 3",
+		Musics: []Music{
+			{Title: "Music 5", Artist: "Artist 5", Playlist: []string{"Playlist 3"}},
+			{Title: "Music 6", Artist: "Artist 6", Playlist: []string{"Playlist 3"}},
+		},
+	}
+
+	playlists := []Playlist{playlist1, playlist2, playlist3}
+
+	// Pesquisa playlists pelo título da música
+	title := "Music 1"
+	matchingPlaylists := searchPlaylistsByTitle(title, playlists)
+
+	// Exibe as playlists encontradas
+	fmt.Printf("Playlists com a música '%s':\n", title)
+	for _, playlist := range matchingPlaylists {
+		fmt.Printf("Playlist: %s\n", playlist.Title)
+		for _, music := range playlist.Musics {
+			fmt.Printf("- %s\n", music.Title)
+		}
+		fmt.Println()
+	}
+}
